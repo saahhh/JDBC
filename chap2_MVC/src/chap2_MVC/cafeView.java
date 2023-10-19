@@ -21,10 +21,10 @@ public class cafeView {
 		System.out.println("카페 연락처 : ");
 		String phone_number = sc.nextLine();
 		System.out.println("카페 운영시간 : ");
-		String operationg_hours = sc.nextLine();
+		String operating_hours = sc.nextLine();
 		
 		//cafeModel에서 insertCafe라는 메서드를 가지고 와야한다
-		model.insertCafe(name, address, phone_number, operationg_hours);
+		model.insertCafe(name, address, phone_number, operating_hours);
 		System.out.println("카페가 성공적으로 추가되었습니다.");		
 	}
 	
@@ -79,6 +79,9 @@ public class cafeView {
 		
 		model.deleteMenu(menu_id);
 		System.out.println("메뉴가 삭제 되었습니다.");
+	}
+	public void insertMenu() {
+		
 	}
 	
 }

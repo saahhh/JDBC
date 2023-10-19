@@ -10,13 +10,13 @@ public class cafeModel {
 	String username = "khcafe";
 	String password = "kh1234";
 	
-	public void insertCafe(String cname, String address, String phone_number, String operating_hours) { //메소드는 실행하는 공간을 만들어주는것
+	public void insertCafe(String name, String address, String phone_number, String operating_hours) { //메소드는 실행하는 공간을 만들어주는것
 		try {
 			Connection con = DriverManager.getConnection(url, username, password);
 			System.out.println("연결 성공!");
-			String SQL = "INSERT INTO cafes(cname, address, phone_number, operationg_hours)" + "VALUES(?, ?, ?, ?)";
+			String SQL = "INSERT INTO cafes(name, address, phone_number, operating_hours)" + "VALUES(?, ?, ?, ?)";
 			PreparedStatement ps = con.prepareStatement(SQL);
-			ps.setString(1, cname);
+			ps.setString(1, name);
 			ps.setString(2, address);
 			ps.setString(3, phone_number);
 			ps.setString(4, operating_hours);
@@ -92,7 +92,11 @@ public class cafeModel {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void insertMenu() {
 		
 	}
+	
 	
 }

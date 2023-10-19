@@ -5,12 +5,16 @@ public class Main {
 		cafeModel model = new cafeModel();
 		cafeView view = new cafeView(model);
 		//controller를 만들어서 실행할 수 있게 해줘야함
-		cafeController controller = new cafeController(model, view);
+		//cafeController controller = new cafeController(model, view);
+	
 		//view.addCafename();
 		//view.updateMenu();
 		//view.updateCafe();
 		//view.deleteCafe();
-		view.deleteMenu();
+		//view.deleteMenu();
+		
+		cafeController controller = new cafeController(model, view);
+		controller.run();
 		
 	}
 	
