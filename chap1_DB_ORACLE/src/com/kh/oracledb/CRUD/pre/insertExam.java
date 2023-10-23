@@ -23,7 +23,7 @@ public class insertExam {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		   
 	}
 	static void insertcafes(PreparedStatement ps, String cname, String address, String phone_number, String operating_hours) throws SQLException  {
 		ps.setString(1, cname);
