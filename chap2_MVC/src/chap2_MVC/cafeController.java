@@ -1,4 +1,4 @@
-package chap2_MVC;
+package chap2_MVC; 
 
 import java.util.Scanner;
 
