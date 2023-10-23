@@ -19,26 +19,45 @@ public class UserMain {
 	}
 	
 	//public boolean idTrue = checkId(userId);
-	public boolean idTrue = checkId(userId) {
+	public boolean checkId(int user_id /*id받는 파라미터 자리*/) throws SQLException {
 		//1.DB연결
 		String jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
 		String dbUserName = "khcafe";
 		String dbPassWord = "kh1234";
-		//2.SQL
 		Connection con = DriverManager.getConnection(jdbcURL, dbUserName, dbPassWord);
-		Scanner sc = new Scanner(System.in);
+
+		//2.SQL
 		String sql = "SELECT * FROM userinfo WHERE user_id = ?";
-		//3.IF활용해서 Result.next()
+		
 		PreparedStatement st = con.prepareStatement(sql);
-		ResultSet result = st.executeQuery();
-			if (result.next()) {
-				
-			} else {
-				
-			} return > 0;
-		//return > 0 1이상이면 일치
+		st.setInt(1, user_id);
+		//3.IF활용해서 Result.next()
+		ResultSet rs = st.executeQuery();
+			if (rs.next()) {
+				int id = rs.getInt(1);
+				return id > 0; //이상이면 true
+			}
+			//return > 0 1이상이면 일치
+			return false;
 	}
 	
+	public boolean checkEmail(String email) throws SQLException {
+		String jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
+		String dbUserName = "khcafe";
+		String dbPassWord = "kh1234";	
+		Connection con = DriverManager.getConnection(jdbcURL, dbUserName, dbPassWord);
+		
+		String sql = "SELECT * FROM USERINFO WHERE email = ?";
+		PreparedStatement st = con.prepareStatement(sql);	
+		st.setString(1, email);
+		ResultSet rs = st.executeQuery();	
+			if(rs.next()) { //값이 존재할 때만 탄다
+				int count = rs.getInt(1);
+				return count > 0; //1이상이면 true
+			} 
+			return false;
+	}
+
 	public void selectScanner() {
 		//1. DB연결 URL, USERNAME, PASSWORD
 		String jdbcURL = "jdbc:oracle:thin:@localhost:1521:xe";
@@ -61,7 +80,8 @@ public class UserMain {
 					break; //break가 없으면 종료되지 않음, 종료하겠습니다 만 출력됨
 				}
 					int userId = Integer.parseInt(input); //형변환을 해주어 코드길이를 단축시킴
-					String email = sc.next();
+					System.out.println("이메일을 입력해주세요. : ");
+					String email = sc.nextLine();
 					//select문 출력하기
 					String sql = "SELECT * FROM USERINFO WHERE user_id = ? AND email = ?";
 					PreparedStatement st = cc.prepareStatement(sql);
@@ -80,13 +100,13 @@ public class UserMain {
 						} else {
 							//boolean ID or Email 중 하나가 일치하지 않는 경우의 처리방법
 							boolean idTrue = checkId(userId);/*아이디 일치하는지 확인하는 메서드(user_id);*/
-							boolean emailTrue = checkEmail(userEmail); /*이메  일 일치하는지 확인하는 메서드(userEmail);*/
+							boolean emailTrue = checkEmail(email); /*이메일 일치하는지 확인하는 메서드(userEmail);*/
 							
 							 if (!idTrue && emailTrue) {
-								 System.out.println("일치하는 User ID 입니다.");
+								 System.out.println("일치하지 않는 User ID 입니다.");
 								 System.out.println();
-							} else if (idTrue && emailTrue) { 
-								 System.out.println("일치하는 User Email 입니다.");
+							} else if (idTrue && !emailTrue) { 
+								 System.out.println("일치하지 않는 User Email 입니다.");
 								 System.out.println();
 							} else {
 								System.out.println("일치하는 User ID와 emil을 찾을 수 없습니다.");
@@ -94,13 +114,14 @@ public class UserMain {
 							}
 					
 						}
-				}
+						
+			}
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
 
-		}
+	}
 	
 	public void selectAll() {
 		//1. DB연결 URL, USERNAME, PASSWORD
@@ -168,8 +189,7 @@ public class UserMain {
 				}
 				//연결 닫기
 				connection.close();
-				
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
